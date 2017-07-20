@@ -34,8 +34,8 @@ function get_slug($string, $rmShortWords = false, $separator = '-')
         if (mb_strlen($word) < 1) {
             continue;
         }
-        //var_dump($word);
         $string .= $word .= $separator;
     }
+    
     return trim($string, $separator);
 }
