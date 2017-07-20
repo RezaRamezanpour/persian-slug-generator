@@ -4,10 +4,10 @@ URL(slug) generator for Persian(Farsi) language
 ### This is a function for creating clean URL(slug) for Persian language that tested and works!
 
 # INSTALLATION
+
 Just Simply copy and put the function `get_slug` In your project.
 
 # EXAMPLES
--------------------
 
     echo get_slug('عنوان ٘پ٬ست آزمایشی--!@#$%^&*()`');
     // عنوان-پست-آزمایشی
