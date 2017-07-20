@@ -13,7 +13,7 @@ function get_slug($string, $rmShortWords = false, $separator = '-')
     );
     $allowed = implode('', $allowed);
 
-    $delimiters = array(' ', '|', '(', ')',',','،');
+    $delimiters = array(' ', '|', '_', '(', ')', ',', '،');
     $delimiters = implode('', $delimiters);
 
     $words  = preg_split('/[' . $delimiters . ']/u', $string);
