@@ -2,16 +2,19 @@
 function get_slug($string, $rmShortWords = false, $separator = '-')
 {
 
+    mb_internal_encoding('utf8');
+    mb_regex_encoding("UTF-8");
+
     $word_delimiters = array(' ', '|', '_', '(', ')', ',', '،');
     $word_delimiters = implode('', $word_delimiters);
 
-    $words  = preg_split('/[' . $word_delimiters . ']/u', $string);
+    $words = preg_split('/[' . $word_delimiters . ']/u', $string);
 
     $string = null;
 
     if ($rmShortWords) {
         foreach ($words as $k => $word) {
-            if (mb_strlen($word) < 3) {
+            if (mb_strlen($word) < 2) {
                 unset($words[$k]);
             }
         }
