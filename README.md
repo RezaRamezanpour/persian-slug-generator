@@ -1,7 +1,5 @@
-# Persian Slug Generator
-URL(slug) generator for Persian(Farsi) language
-
-### This is a function for creating clean URL(slug) for Persian language that tested and works!
+# URL slug generator for non-english 
+It's a function for creating clean URL slugs for non-english(unicode) chars that tested and works!
 
 # INSTALLATION
 
