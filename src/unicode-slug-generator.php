@@ -1,49 +1,34 @@
 /**
  * Generates URL Slug
- * @param  string  $string          the raw string to be converted
- * @param  boolean $rm_short_words  if true, words shorter than 2 char -
- *                                  length will be removed from the slug
- * @param  string  $separator       separator chars
- * @return string                   the slug
+ * @param  string  $string            the raw string to be converted
+ * @param  boolean $ignoreShortWords  if true, words shorter than 2 char
+ *                                     length will be removed from the slug
+ * @param  string  $separator         separator char
+ * @return string                     the generated slug
  */
-function get_slug($string, $rm_short_words = false, $separator = '-')
+function generateSlug($string, $ignoreShortWords = false, $separator = '-')
 {
+	mb_internal_encoding('utf8');
+	mb_regex_encoding("UTF-8");
 
-    // Set internal character encoding to utf8
-    mb_internal_encoding('utf8');
-    mb_regex_encoding("UTF-8");
+	$wordDelimiters = array(' ', '|', '_', '(', ')', ',', '،');
+	$wordDelimiters = implode('', $wordDelimiters);
+	$words = preg_split('/[' . $wordDelimiters . ']/u', $string);
 
-    // define our delimiters to split slug words
-    $word_delimiters = array(' ', '|', '_', '(', ')', ',', '،');
+	$string = null;
 
-    // join delimiters to use in preg_split!
-    $word_delimiters = implode('', $word_delimiters);
+	if ($ignoreShortWords) {
+		foreach ($words as $k => $word) {
+			if (mb_strlen($word) < 2) unset($words[$k]);
+		}
+	}
 
-    // split words using delimiters
-    $words = preg_split('/[' . $word_delimiters . ']/u', $string);
+	foreach ($words as $word) {
+		$word = mb_strtolower($word);
+		$word = mb_ereg_replace('[^\p{L}\p{Nd}]', '', $word);
+		if (mb_strlen($word) < 1) continue;
+		$string .= $word .= $separator;
+	}
 
-    $string = null;
-
-    // is $rm_short_words enabled? 
-    // remove that short words from my slug!
-    if ($rm_short_words) {
-        foreach ($words as $k => $word) {
-            if (mb_strlen($word) < 2) {
-                unset($words[$k]);
-            }
-        }
-    }
-
-    // join splitted word with defined seperator
-    foreach ($words as $word) {
-        $word = mb_strtolower($word);
-        $word = mb_ereg_replace('[^\p{L}\p{Nd}]', '', $word);
-        if (mb_strlen($word) < 1) {
-            continue;
-        }
-        $string .= $word .= $separator;
-    }
-
-    // all done. return the clean slug
-    return trim($string, $separator);
+	return trim($string, $separator);
 }
